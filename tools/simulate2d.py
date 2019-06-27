@@ -102,6 +102,7 @@ def on_resize(event):
 read_result_file(sys.argv[1])
 
 top = Tk()
+top.title("simulate2d")
 
 if canvas_size is None:
     top.attributes("-zoomed", True)
