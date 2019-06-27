@@ -1,27 +1,17 @@
-program nbody
+program nbody_serial
 implicit none
     integer(kind = 8) :: nsteps
     integer(kind = 8) :: nparticles
 
     real(kind = 8), dimension(:), allocatable :: m
-
-    real(kind = 8), dimension(:), allocatable :: x
-    real(kind = 8), dimension(:), allocatable :: y
-    real(kind = 8), dimension(:), allocatable :: z
-
-    real(kind = 8), dimension(:), allocatable :: x_tmp
-    real(kind = 8), dimension(:), allocatable :: y_tmp
-    real(kind = 8), dimension(:), allocatable :: z_tmp
-
-    real(kind = 8), dimension(:), allocatable :: vx
-    real(kind = 8), dimension(:), allocatable :: vy
-    real(kind = 8), dimension(:), allocatable :: vz
+    real(kind = 8), dimension(:), allocatable :: x, y, z
+    real(kind = 8), dimension(:), allocatable :: x_tmp, y_tmp, z_tmp
+    real(kind = 8), dimension(:), allocatable :: vx, vy, vz
 
     real(kind = 8) :: G
     real(kind = 8) :: dt
     real(kind = 8) :: dx, dy, dz
     real(kind = 8) :: r, a
-
     real(kind = 8) :: softening
 
     integer(kind = 8) :: n, i, j
@@ -35,8 +25,8 @@ implicit none
         call get_command_argument(int(i), arg)
         if (len_trim(arg) == 0) then
             print *, "Please specify arguments correctly." // achar(10)
-            print *, "Usage: nbody <nsteps> <dt> <G> <softening> <PARAMETERS_FILE>" &
-                // achar(10)
+            print *, "Usage: nbody <nsteps> <dt> <G> <softening> " &
+                // "<PARAMETERS_FILE>" // achar(10)
             print *, "PARAMETERS_FILE format:"
             print *, " nparticles (on the first line)"
             print *, " m x y z vx vy vz (on each line after the first line)"
@@ -59,7 +49,7 @@ implicit none
 
     open(1, file = param_file, iostat = ios, status = "old")
     if (ios /= 0) then
-        print *, "Can't open the PARAMETERS_FILE: ", param_file
+        print *, "Can't open the PARAMETERS_FILE:", param_file
         stop
     end if
 
@@ -78,15 +68,15 @@ implicit none
     print *, "Initial parameters:"
     do i = 0, nparticles - 1
         read(1, *) m(i), x(i), y(i), z(i), vx(i), vy(i), vz(i)
-        print *, i, ": m = ", m(i), "x = ", x(i), "y = ", y(i), "z = ", z(i), &
-            "vx = ", vx(i), "vy = ", vy(i), "vz = ", vz(i)
+        print *, i, ": m =", m(i), "x =", x(i), "y =", y(i), "z =", z(i), &
+            "vx =", vx(i), "vy =", vy(i), "vz =", vz(i)
     end do
 
     close(1)
 
-    print *, "n = ", 0_8
+    print *, "n =", 0_8
     do i = 0, nparticles - 1
-        print *, i, ": ", x(i), y(i), z(i)
+        print *, i, ":", x(i), y(i), z(i)
     end do
 
     do n = 1, nsteps
@@ -96,16 +86,11 @@ implicit none
 
         do i = 0, nparticles - 1
             do j = 0, nparticles - 1
-                ! if (i == j) cycle
-
                 dx = x(j) - x(i)
                 dy = y(j) - y(i)
                 dz = z(j) - z(i)
 
                 r = sqrt(dx ** 2 + dy ** 2 + dz ** 2 + softening)
-                ! if (r == 0) cycle
-
-                ! a divided by r and multiplied by dt early.
                 a = G * m(j) / r ** 3 * dt
 
                 vx(i) = vx(i) + a * dx
@@ -118,9 +103,9 @@ implicit none
         y = y_tmp
         z = z_tmp
 
-        print *, "n = ", n
+        print *, "n =", n
         do i = 0, nparticles - 1
-            print *, i, ": ", x(i), y(i), z(i)
+            print *, i, ":", x(i), y(i), z(i)
         end do
     end do
 
