@@ -7,7 +7,7 @@ import random
 # Check parameters.
 if len(sys.argv) < 16:
     print("Please specify arguments correctly.")
-    print("Usage: mkparam.py <count> <m_min> <m_max> " +
+    print("Usage: mkrandparam.py <count> <m_min> <m_max> " +
           "<x_min> <y_min> <z_min> <x_max> <y_max> <z_max> " +
           "<vx_min> <vy_min> <vz_min> <vx_max> <vy_max> <vz_max>")
     sys.exit(0x1)

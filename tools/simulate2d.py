@@ -6,7 +6,7 @@ from tkinter import *
 # Check parameters.
 if len(sys.argv) < 2:
     print("Please specify arguments correctly.")
-    print("Usage: simulate.py <result.txt> " +
+    print("Usage: simulate2d.py <result.txt> " +
           "[max_step [scale [center_x center_y [width height]]]]")
     sys.exit(0x1)
 
