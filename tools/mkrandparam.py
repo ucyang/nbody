@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Make random parameters for N-body GUI simulator.
+# Make random parameters for N-body simulator.
 
 import sys
 import random
