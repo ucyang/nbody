@@ -1,2 +1,2 @@
 # nbody
-N-Body
+N-Body Simulation
