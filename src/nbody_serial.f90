@@ -80,11 +80,11 @@ implicit none
     end do
 
     do n = 1, nsteps
-        x_tmp = x + vx * dt
-        y_tmp = y + vy * dt
-        z_tmp = z + vz * dt
-
         do i = 0, nparticles - 1
+            x_tmp(i) = x(i) + vx(i) * dt
+            y_tmp(i) = y(i) + vy(i) * dt
+            z_tmp(i) = z(i) + vz(i) * dt
+
             do j = 0, nparticles - 1
                 dx = x(j) - x(i)
                 dy = y(j) - y(i)
@@ -99,9 +99,11 @@ implicit none
             end do
         end do
 
-        x = x_tmp
-        y = y_tmp
-        z = z_tmp
+        do i = 0, nparticles - 1
+            x(i) = x_tmp(i)
+            y(i) = y_tmp(i)
+            z(i) = z_tmp(i)
+        end do
 
         print *, "n =", n
         do i = 0, nparticles - 1
