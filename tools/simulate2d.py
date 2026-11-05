@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # N-body GUI simulator
 
+import sys
 from tkinter import *
 
 # Check parameters.
