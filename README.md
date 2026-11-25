@@ -6,11 +6,11 @@ The repository contains serial and OpenMP-parallel N-body programs in C
 and Fortran. It includes two example inputs that show when parallelization
 fails and when it succeeds:
 
-- `parameters/solar_ellipse_c.txt` and
-  `parameters/solar_ellipse_fortran.txt` describe the solar system with
-  only 8 particles. This is an intended **parallelization-failure**
-  example: each step has too little work to share, so parallel execution
-  is expected to be slower than serial execution.
+- `parameters/solar_ellipse.txt` describes the solar system with only
+  8 particles. Both the C and Fortran programs use this file. This is an
+  intended **parallelization-failure** example: each step has too little
+  work to share, so parallel execution is expected to be slower than
+  serial execution.
 - `parameters/random_2000.txt` contains 2000 particles. This is the
   **parallelization-success** example: with enough work per step,
   parallel execution is expected to pay off.
@@ -58,18 +58,18 @@ C:
 
 ```sh
 time ./nbody_serial_c 100000 1e3 6.6743e-11 1 \
-  parameters/solar_ellipse_c.txt > result_serial_c.txt
+  parameters/solar_ellipse.txt > result_serial_c.txt
 time env OMP_NUM_THREADS=2 ./nbody_parallel_c 100000 1e3 6.6743e-11 1 \
-  parameters/solar_ellipse_c.txt > result_parallel_c.txt
+  parameters/solar_ellipse.txt > result_parallel_c.txt
 ```
 
 Fortran:
 
 ```sh
 time ./nbody_serial_fortran 100000 1d3 6.6743d-11 1 \
-  parameters/solar_ellipse_fortran.txt > result_serial_fortran.txt
+  parameters/solar_ellipse.txt > result_serial_fortran.txt
 time env OMP_NUM_THREADS=2 ./nbody_parallel_fortran 100000 1d3 6.6743d-11 1 \
-  parameters/solar_ellipse_fortran.txt > result_parallel_fortran.txt
+  parameters/solar_ellipse.txt > result_parallel_fortran.txt
 ```
 
 ### Example 2: 2000 particles (parallelization success)
